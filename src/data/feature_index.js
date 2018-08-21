@@ -109,10 +109,8 @@ class FeatureIndex {
         let minY = Infinity;
         let maxX = -Infinity;
         let maxY = -Infinity;
-        for (let i = 0; i < queryGeometry.length; i++) {
-            const ring = queryGeometry[i];
-            for (let k = 0; k < ring.length; k++) {
-                const p = ring[k];
+        for (const ring of args.cameraQueryGeometry) {
+            for (const p of ring) {
                 minX = Math.min(minX, p.x);
                 minY = Math.min(minY, p.y);
                 maxX = Math.max(maxX, p.x);
@@ -124,6 +122,7 @@ class FeatureIndex {
         matching.sort(topDownFeatureComparator);
         const result = {};
         let previousIndex;
+        console.log(matching.length);
         for (let k = 0; k < matching.length; k++) {
             const index = matching[k];
 

@@ -26,6 +26,63 @@ var map = window.map = new mapboxgl.Map({
     hash: true
 });
 
+map.on('load', function() {
+    map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'paint': {
+            'fill-extrusion-color': ['case', ['boolean', ['feature-state', 'hovered'], false], '#f00', '#aaa'],
+
+            // use an 'interpolate' expression to add a smooth transition effect to the
+            // buildings as the user zooms in
+            'fill-extrusion-height': [
+                "interpolate", ["linear"], ["zoom"],
+                15, 0,
+                15.05, ["get", "height"]
+            ],
+            'fill-extrusion-base': [
+                "interpolate", ["linear"], ["zoom"],
+                15, 0,
+                15.05, ["get", "min_height"]
+            ],
+            'fill-extrusion-opacity': .6
+        }
+    });
+
+    let hovered = null;
+    let hoveredSet = null;
+    map.on('mousemove', '3d-buildings', function(e) {
+        //const offset = new mapboxgl.Point(10, -10);
+        //const features = map.queryRenderedFeatures([e.point.sub(offset), e.point.add(offset)]);//, { layers: ['3d-buildings'] });
+        //const features = map.queryRenderedFeatures(e.point, { layers: ['3d-buildings'] });
+        const features = e.features;
+        if (hoveredSet) {
+            hoveredSet.forEach((hovered) => map.setFeatureState(hovered, { hovered: false }));
+            hoveredSet = null;
+        }
+        if (features) {
+            hoveredSet = [];
+            console.log('here', features);
+            features.forEach((feature) => {
+                hovered = { source: 'composite', 'sourceLayer': 'building', id: feature.id };
+                map.setFeatureState(hovered, { hovered: true });
+                hoveredSet.push(hovered);
+            });
+        }
+    });
+
+    map.on('mouseleave', '3d-buildings', function(e) {
+        if (hoveredSet) {
+            hoveredSet.forEach((hovered) => map.setFeatureState(hovered, { hovered: false }));
+            hoveredSet = null;
+        }
+    });
+});
+
 </script>
 </body>
 </html>

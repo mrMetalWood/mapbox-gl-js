@@ -11,11 +11,11 @@ import assert from 'assert';
 
 export function queryRenderedFeatures(sourceCache: SourceCache,
                             styleLayers: {[string]: StyleLayer},
-                            queryGeometry: Array<Coordinate>,
+                            queryGeometry: Array<Point>,
                             params: { filter: FilterSpecification, layers: Array<string> },
                             transform: Transform) {
     const maxPitchScaleFactor = transform.maxPitchScaleFactor();
-    const tilesIn = sourceCache.tilesIn(queryGeometry, maxPitchScaleFactor);
+    const tilesIn = sourceCache.tilesIn(queryGeometry, maxPitchScaleFactor, transform);
 
     tilesIn.sort(sortTilesIn);
 
@@ -27,6 +27,7 @@ export function queryRenderedFeatures(sourceCache: SourceCache,
                 styleLayers,
                 sourceCache._state,
                 tileIn.queryGeometry,
+                tileIn.cameraQueryGeometry,
                 tileIn.scale,
                 params,
                 transform,

@@ -122,7 +122,7 @@ class FeatureIndex {
         matching.sort(topDownFeatureComparator);
         const result = {};
         let previousIndex;
-        console.log(matching.length);
+        //console.log(matching.length);
         for (let k = 0; k < matching.length; k++) {
             const index = matching[k];
 

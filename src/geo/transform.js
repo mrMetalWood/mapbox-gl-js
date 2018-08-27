@@ -643,10 +643,10 @@ class Transform {
             let maxX = c.x;
             let maxY = c.y;
             for (const p of queryGeometry) {
-                let minX = Math.min(minX, p.x);
-                let minY = Math.min(minY, p.y);
-                let maxX = Math.max(maxX, p.x);
-                let maxY = Math.max(maxY, p.y);
+                minX = Math.min(minX, p.x);
+                minY = Math.min(minY, p.y);
+                maxX = Math.max(maxX, p.x);
+                maxY = Math.max(maxY, p.y);
             }
             return [
                 new Point(minX, minY),

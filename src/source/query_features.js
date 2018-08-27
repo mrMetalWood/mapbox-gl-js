@@ -8,6 +8,14 @@ import type Transform from '../geo/transform';
 import type { RetainedQueryData } from '../symbol/placement';
 import type {FilterSpecification} from '../style-spec/types';
 import assert from 'assert';
+import { mat4 } from 'gl-matrix';
+
+function getMatrix(transform, tileID) {
+    const t = mat4.identity([]);
+    mat4.translate(t, t, [1, 1, 0]);
+    mat4.scale(t, t, [transform.width * 0.5, transform.height * 0.5, 1]);
+    return mat4.multiply(t, t, transform.calculatePosMatrix(tileID.toUnwrapped()));
+}
 
 export function queryRenderedFeatures(sourceCache: SourceCache,
                             styleLayers: {[string]: StyleLayer},
@@ -32,7 +40,7 @@ export function queryRenderedFeatures(sourceCache: SourceCache,
                 params,
                 transform,
                 maxPitchScaleFactor,
-                sourceCache.transform.calculatePosMatrix(tileIn.tileID.toUnwrapped()))
+                getMatrix(sourceCache.transform, tileIn.tileID))
         });
     }
 

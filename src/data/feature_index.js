@@ -188,7 +188,8 @@ class FeatureIndex {
             const styleLayer = styleLayers[layerID];
             if (!styleLayer) continue;
 
-            if (intersectionTest && !intersectionTest(feature, styleLayer)) {
+            const intersectionZ = !intersectionTest || intersectionTest(feature, styleLayer);
+            if (!intersectionZ) {
                 // Only applied for non-symbol features
                 continue;
             }
@@ -199,7 +200,15 @@ class FeatureIndex {
             if (layerResult === undefined) {
                 layerResult = result[layerID] = [];
             }
-            layerResult.push({ featureIndex: featureIndex, feature: geojsonFeature });
+            layerResult.push({ featureIndex: featureIndex, feature: geojsonFeature, intersectionZ: intersectionZ });
+        }
+
+        // if 3d TODO
+        for (const layerID of layerIDs) {
+            const layerResult = result[layerID];
+            if (layerResult) {
+                layerResult.sort((a, b) => a.intersectionZ - b.intersectionZ);
+            }
         }
     }
 

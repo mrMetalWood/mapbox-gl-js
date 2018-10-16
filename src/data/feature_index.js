@@ -202,14 +202,6 @@ class FeatureIndex {
             }
             layerResult.push({ featureIndex: featureIndex, feature: geojsonFeature, intersectionZ: intersectionZ });
         }
-
-        // if 3d TODO
-        for (const layerID of layerIDs) {
-            const layerResult = result[layerID];
-            if (layerResult) {
-                layerResult.sort((a, b) => a.intersectionZ - b.intersectionZ);
-            }
-        }
     }
 
     // Given a set of symbol indexes that have already been looked up,

@@ -48,7 +48,8 @@ export function queryRenderedFeatures(sourceCache: SourceCache,
 
     // Merge state from SourceCache into the results
     for (const layerID in result) {
-        result[layerID].forEach((feature) => {
+        result[layerID].forEach((featureWrapper) => {
+            const feature = featureWrapper.feature;
             const state = sourceCache.getFeatureState(feature.layer['source-layer'], feature.id);
             feature.source = feature.layer.source;
             if (feature.layer['source-layer']) {
@@ -170,7 +171,7 @@ function mergeRenderedFeatureLayers(tiles) {
             for (const tileFeature of tileFeatures) {
                 if (!wrappedIDFeatures[tileFeature.featureIndex]) {
                     wrappedIDFeatures[tileFeature.featureIndex] = true;
-                    resultFeatures.push(tileFeature.feature);
+                    resultFeatures.push(tileFeature);
                 }
             }
         }

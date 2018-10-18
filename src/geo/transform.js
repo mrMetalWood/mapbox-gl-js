@@ -631,7 +631,7 @@ class Transform {
         return this.centerPoint.add(new Point(0, latOffset));
     }
 
-    getCameraQueryGeometry(queryGeometry: Array<Point>) {
+    getCameraQueryGeometry(queryGeometry: Array<Point>) : Array<Point> {
         assert(queryGeometry.length === 1 || queryGeometry.length === 5);
         const c = this.getCameraPoint();
 

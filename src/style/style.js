@@ -954,7 +954,7 @@ class Style extends Evented {
         const sourceResults = [];
         const queryCoordinates = queryGeometry.map((p) => transform.pointCoordinate(p));
 
-        console.time('query');
+        //console.time('query');
         for (const id in this.sourceCaches) {
             if (params.layers && !includedSources[id]) continue;
             sourceResults.push(
@@ -980,7 +980,7 @@ class Style extends Evented {
                     this.placement.retainedQueryData)
             );
         }
-        console.timeEnd('query');
+        //console.timeEnd('query');
         return this._flattenAndSortRenderedFeatures(sourceResults);
     }
 

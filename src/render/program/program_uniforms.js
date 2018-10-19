@@ -35,6 +35,7 @@ export const programUniforms = {
     linePattern: linePatternUniforms,
     lineSDF: lineSDFUniforms,
     raster: rasterUniforms,
+    rasterDataDriven: rasterUniforms,
     symbolIcon: symbolIconUniforms,
     symbolSDF: symbolSDFUniforms,
     background: backgroundUniforms,

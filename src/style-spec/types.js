@@ -362,6 +362,31 @@ export type RasterLayerSpecification = {|
     |}
 |}
 
+export type RasterDataDrivenLayerSpecification = {|
+    "id": string,
+    "type": "raster-data-driven",
+    "metadata"?: mixed,
+    "source": string,
+    "source-layer"?: string,
+    "lookupTexture": ImageData,
+    "minzoom"?: number,
+    "maxzoom"?: number,
+    "filter"?: FilterSpecification,
+    "layout"?: {|
+        "visibility"?: "visible" | "none"
+    |},
+    "paint"?: {|
+        "raster-opacity"?: PropertyValueSpecification<number>,
+        "raster-hue-rotate"?: PropertyValueSpecification<number>,
+        "raster-brightness-min"?: PropertyValueSpecification<number>,
+        "raster-brightness-max"?: PropertyValueSpecification<number>,
+        "raster-saturation"?: PropertyValueSpecification<number>,
+        "raster-contrast"?: PropertyValueSpecification<number>,
+        "raster-resampling"?: PropertyValueSpecification<"linear" | "nearest">,
+        "raster-fade-duration"?: PropertyValueSpecification<number>
+    |}
+|}
+
 export type HillshadeLayerSpecification = {|
     "id": string,
     "type": "hillshade",
@@ -408,6 +433,7 @@ export type LayerSpecification =
     | HeatmapLayerSpecification
     | FillExtrusionLayerSpecification
     | RasterLayerSpecification
+    | RasterDataDrivenLayerSpecification
     | HillshadeLayerSpecification
     | BackgroundLayerSpecification;
 

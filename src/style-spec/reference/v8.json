@@ -529,6 +529,17 @@
             }
           }
         },
+        "raster-data-driven": {
+          "doc": "Data driven raster map textures such as satellite imagery.",
+          "sdk-support": {
+            "basic functionality": {
+              "js": "0.10.0",
+              "android": "2.0.1",
+              "ios": "2.0.0",
+              "macos": "0.1.0"
+            }
+          }
+        },
         "hillshade": {
           "doc": "Client-side hillshading visualization based on DEM data. Currently, the implementation only supports Mapbox Terrain RGB and Mapzen Terrarium tiles.",
           "sdk-support": {
@@ -600,6 +611,7 @@
     "layout_fill-extrusion",
     "layout_symbol",
     "layout_raster",
+    "layout_raster-data-driven",
     "layout_hillshade",
     "layout_background"
   ],
@@ -2118,6 +2130,31 @@
     }
   },
   "layout_raster": {
+    "visibility": {
+      "type": "enum",
+      "values": {
+        "visible": {
+          "doc": "The layer is shown."
+        },
+        "none": {
+          "doc": "The layer is not shown."
+        }
+      },
+      "default": "visible",
+      "doc": "Whether this layer is displayed.",
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "property-type": "constant"
+    }
+  },
+  "layout_raster-data-driven": {
     "visibility": {
       "type": "enum",
       "values": {
@@ -5069,6 +5106,205 @@
     }
   },
   "paint_raster": {
+    "raster-opacity": {
+      "type": "number",
+      "doc": "The opacity at which the image will be drawn.",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "transition": true,
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-hue-rotate": {
+      "type": "number",
+      "default": 0,
+      "period": 360,
+      "transition": true,
+      "units": "degrees",
+      "doc": "Rotates hues around the color wheel.",
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-brightness-min": {
+      "type": "number",
+      "doc": "Increase or reduce the brightness of the image. The value is the minimum brightness.",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 1,
+      "transition": true,
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-brightness-max": {
+      "type": "number",
+      "doc": "Increase or reduce the brightness of the image. The value is the maximum brightness.",
+      "default": 1,
+      "minimum": 0,
+      "maximum": 1,
+      "transition": true,
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-saturation": {
+      "type": "number",
+      "doc": "Increase or reduce the saturation of the image.",
+      "default": 0,
+      "minimum": -1,
+      "maximum": 1,
+      "transition": true,
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-contrast": {
+      "type": "number",
+      "doc": "Increase or reduce the contrast of the image.",
+      "default": 0,
+      "minimum": -1,
+      "maximum": 1,
+      "transition": true,
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-resampling": {
+      "type": "enum",
+      "doc": "The resampling/interpolation method to use for overscaling, also known as texture magnification filter",
+      "values": {
+        "linear": {
+          "doc": "(Bi)linear filtering interpolates pixel values using the weighted average of the four closest original source pixels creating a smooth but blurry look when overscaled"
+        },
+        "nearest": {
+          "doc": "Nearest neighbor filtering interpolates pixel values using the nearest original source pixel creating a sharp but pixelated look when overscaled"
+        }
+      },
+      "default": "linear",
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.47.0",
+          "android": "6.3.0",
+          "ios": "4.2.0",
+          "macos": "0.9.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": false,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    },
+    "raster-fade-duration": {
+      "type": "number",
+      "default": 300,
+      "minimum": 0,
+      "transition": false,
+      "units": "milliseconds",
+      "doc": "Fade duration when a new tile is added.",
+      "sdk-support": {
+        "basic functionality": {
+          "js": "0.10.0",
+          "android": "2.0.1",
+          "ios": "2.0.0",
+          "macos": "0.1.0"
+        },
+        "data-driven styling": {}
+      },
+      "expression": {
+        "interpolated": true,
+        "parameters": [
+          "zoom"
+        ]
+      },
+      "property-type": "data-constant"
+    }
+  },
+  "paint_raster-data-driven": {
     "raster-opacity": {
       "type": "number",
       "doc": "The opacity at which the image will be drawn.",

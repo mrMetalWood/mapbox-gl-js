@@ -18,75 +18,13 @@
 <script src='/debug/access_token_generated.js'></script>
 <script>
 
-    /**
-     * Helper to create the texture canvas context.
-     * @param  {number} [width=256]  The width of the canvas
-     * @param  {number} [height=1]  The height of the canvas
-     * @return {CanvasRenderingContext2D}  The canvas 2d context
-     */
-    function createTextureContext(width = 256, height = 1) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-
-        canvas.width = width;
-        canvas.height = height;
-
-        return context;
-    }
-
-    function createLuT() {
-        const width = 256; // number of possible pixel color values
-        const height = 1;
-        const context = createTextureContext();
-
-        for (let i = 0; i < width; i++) {
-            context.fillStyle = `rgba(${i}, ${i}, 255, ${1 - i / 255})`;
-            context.fillRect(i, 0, 1, height);
-        }
-
-        return context.getImageData(0, 0, width, height);
-    }
-
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: {
-            "version": 8,
-            "sources": {
-                "satellite-tiles-source": {
-                    "type": "raster",
-                    "url": "mapbox://mapbox.streets",
-                    "tileSize": 256
-                },
-                "grey-tiles-source": {
-                    "type": "raster",
-                    "tiles": [
-                        "https://storage.googleapis.com/storage.ubidev.net/meteogroup/dWU5OHd6Zmg4NzI5cmZjMDh6/tiles/temperature-data/15/{z}/{x}/{y}.png"
-                    ],
-                    "tileSize": 256,
-                    "scheme": "tms",
-                }
-            },
-            "layers": [
-                {
-                    "id": "satellite-tiles-layer",
-                    "type": "raster",
-                    "source": "satellite-tiles-source",
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                },
-                {
-                    "id": "grey-tiles-layer",
-                    "type": "raster-data-driven",
-                    "source": "grey-tiles-source",
-                    "minzoom": 0,
-                    "maxzoom": 22,
-                    "lookupTexture": createLuT()
-                }
-            ]
-        },
-        center: [-74.50, 40], // starting position
-        zoom: 0 // starting zoom
-    });
+var map = window.map = new mapboxgl.Map({
+    container: 'map',
+    zoom: 12.5,
+    center: [-77.01866, 38.888],
+    style: 'mapbox://styles/mapbox/streets-v10',
+    hash: true
+});
 
 </script>
 </body>

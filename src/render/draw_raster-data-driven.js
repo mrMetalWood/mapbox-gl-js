@@ -31,13 +31,13 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterDat
     const colorMode = painter.colorModeForRenderPass();
     const minTileZ = coords.length && coords[0].overscaledZ;
 
-    // ubilabs: bind look-up texture to texture unit 2
+    // ubilabs start
     const imageData = layer._lookupTexture;
     const lookupTexture = new Texture(context, imageData, gl.RGBA);
 
     context.activeTexture.set(gl.TEXTURE2);
     lookupTexture.bind(gl.NEAREST, gl.CLAMP_TO_EDGE);
-    gl.uniform1i(program.fixedUniforms.u_look_up_texture, 2);
+    // ubilabs end
 
     for (const coord of coords) {
         // Set the lower zoom level to sublayer 0, and higher zoom levels to higher sublayers

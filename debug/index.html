@@ -40,25 +40,24 @@
         const context = createTextureContext();
 
         for (let i = 0; i < width; i++) {
-            const r = Math.floor(Math.random() * 255);
-            const g = Math.floor(Math.random() * 255);
-            const b = Math.floor(Math.random() * 255);
-
-            context.fillStyle = `rgb(${i}, ${g}, ${b})`;
+            context.fillStyle = `rgba(${i}, ${i}, 255, ${1 - i / 255})`;
             context.fillRect(i, 0, 1, height);
         }
 
         return context.getImageData(0, 0, width, height);
     }
 
-    var lol = createLuT();
-
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: {
             "version": 8,
             "sources": {
-                "grey-tiles": {
+                "satellite-tiles-source": {
+                    "type": "raster",
+                    "url": "mapbox://mapbox.streets",
+                    "tileSize": 256
+                },
+                "grey-tiles-source": {
                     "type": "raster",
                     "tiles": [
                         "https://storage.googleapis.com/storage.ubidev.net/meteogroup/dWU5OHd6Zmg4NzI5cmZjMDh6/tiles/temperature-data/15/{z}/{x}/{y}.png"
@@ -67,14 +66,23 @@
                     "scheme": "tms",
                 }
             },
-            "layers": [{
-                "id": "simple-tiles",
-                "type": "raster-data-driven",
-                "source": "grey-tiles",
-                "minzoom": 0,
-                "maxzoom": 22,
-                "lookupTexture": lol
-            }]
+            "layers": [
+                {
+                    "id": "satellite-tiles-layer",
+                    "type": "raster",
+                    "source": "satellite-tiles-source",
+                    "minzoom": 0,
+                    "maxzoom": 22,
+                },
+                {
+                    "id": "grey-tiles-layer",
+                    "type": "raster-data-driven",
+                    "source": "grey-tiles-source",
+                    "minzoom": 0,
+                    "maxzoom": 22,
+                    "lookupTexture": createLuT()
+                }
+            ]
         },
         center: [-74.50, 40], // starting position
         zoom: 0 // starting zoom

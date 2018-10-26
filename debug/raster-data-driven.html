@@ -40,7 +40,7 @@
         const context = createTextureContext();
 
         for (let i = 0; i < width; i++) {
-            context.fillStyle = `rgba(${i}, ${i}, 255, ${1 - i / 255})`;
+            context.fillStyle = `rgba(${i}, ${i}, 255, 1)`;
             context.fillRect(i, 0, 1, height);
         }
 
@@ -80,6 +80,9 @@
                     "source": "grey-tiles-source",
                     "minzoom": 0,
                     "maxzoom": 22,
+                    "paint": {
+                        "raster-opacity": 0.5,
+                    },
                     "lookupTexture": createLuT()
                 }
             ]

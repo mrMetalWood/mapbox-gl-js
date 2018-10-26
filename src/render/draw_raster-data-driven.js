@@ -55,7 +55,7 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterDat
 
         let parentScaleBy, parentTL;
 
-        const textureFilter = layer.paint.get('raster-resampling') === 'nearest' ?  gl.NEAREST : gl.LINEAR;
+        const textureFilter = layer.paint.get('raster-resampling') === 'linear' ? gl.LINEAR : gl.NEAREST;
 
         context.activeTexture.set(gl.TEXTURE0);
         tile.texture.bind(textureFilter, gl.CLAMP_TO_EDGE, gl.LINEAR_MIPMAP_NEAREST);

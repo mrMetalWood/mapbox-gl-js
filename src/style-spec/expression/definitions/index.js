@@ -194,6 +194,11 @@ CompoundExpression.register(expressions, {
         [],
         (ctx) => ctx.globals.heatmapDensity || 0
     ],
+    'raster-density': [
+        NumberType,
+        [],
+        (ctx) => ctx.globals.rasterDensity || 0
+    ],
     'line-progress': [
         NumberType,
         [],

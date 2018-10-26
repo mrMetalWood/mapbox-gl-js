@@ -37,6 +37,7 @@ export type FeatureState = {[string]: any};
 export type GlobalProperties = $ReadOnly<{
     zoom: number,
     heatmapDensity?: number,
+    rasterDensity?: number,
     lineProgress?: number,
     isSupportedScript?: (string) => boolean
 }>;

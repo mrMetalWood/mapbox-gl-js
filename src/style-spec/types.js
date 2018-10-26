@@ -383,7 +383,8 @@ export type RasterDataDrivenLayerSpecification = {|
         "raster-saturation"?: PropertyValueSpecification<number>,
         "raster-contrast"?: PropertyValueSpecification<number>,
         "raster-resampling"?: PropertyValueSpecification<"linear" | "nearest">,
-        "raster-fade-duration"?: PropertyValueSpecification<number>
+        "raster-fade-duration"?: PropertyValueSpecification<number>,
+        "raster-color"?: ExpressionSpecification,
     |}
 |}
 

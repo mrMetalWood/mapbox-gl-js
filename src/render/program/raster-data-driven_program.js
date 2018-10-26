@@ -51,7 +51,8 @@ const rasterDataDrivenUniformValues = (
     parentTL: [number, number],
     parentScaleBy: number,
     fade: {mix: number, opacity: number},
-    layer: RasterDataDrivenStyleLayer
+    layer: RasterDataDrivenStyleLayer,
+    colorRampUnit: number
 ): UniformValues<RasterDataDrivenUniformsType> => ({
     'u_matrix': matrix,
     'u_tl_parent': parentTL,
@@ -61,7 +62,7 @@ const rasterDataDrivenUniformValues = (
     'u_opacity': fade.opacity * layer.paint.get('raster-opacity'),
     'u_image0': 0,
     'u_image1': 1,
-    'u_look_up_texture': 2,
+    'u_look_up_texture': colorRampUnit,
     'u_brightness_low': layer.paint.get('raster-brightness-min'),
     'u_brightness_high': layer.paint.get('raster-brightness-max'),
     'u_saturation_factor': saturationFactor(layer.paint.get('raster-saturation')),

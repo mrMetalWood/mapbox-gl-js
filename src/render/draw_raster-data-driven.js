@@ -32,11 +32,13 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterDat
     const minTileZ = coords.length && coords[0].overscaledZ;
 
     // ubilabs start
-    const imageData = layer._lookupTexture;
-    const lookupTexture = new Texture(context, imageData, gl.RGBA);
-
     context.activeTexture.set(gl.TEXTURE2);
-    lookupTexture.bind(gl.NEAREST, gl.CLAMP_TO_EDGE);
+    let colorRampTexture = layer.colorRampTexture;
+    if (!colorRampTexture) {
+        colorRampTexture = layer.colorRampTexture = new Texture(context, layer.colorRamp, gl.RGBA);
+    }
+
+    colorRampTexture.bind(gl.NEAREST, gl.CLAMP_TO_EDGE);
     // ubilabs end
 
     for (const coord of coords) {
@@ -71,7 +73,7 @@ function drawRaster(painter: Painter, sourceCache: SourceCache, layer: RasterDat
             tile.texture.bind(textureFilter, gl.CLAMP_TO_EDGE, gl.LINEAR_MIPMAP_NEAREST);
         }
 
-        const uniformValues = rasterDataDrivenUniformValues(posMatrix, parentTL || [0, 0], parentScaleBy || 1, fade, layer);
+        const uniformValues = rasterDataDrivenUniformValues(posMatrix, parentTL || [0, 0], parentScaleBy || 1, fade, layer, 2);
 
         if (source instanceof ImageSource) {
             program.draw(context, gl.TRIANGLES, depthMode, stencilMode, colorMode, CullFaceMode.disabled,
